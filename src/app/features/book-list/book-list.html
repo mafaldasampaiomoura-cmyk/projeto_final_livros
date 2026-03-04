@@ -22,7 +22,7 @@
   >
     <div class="top">
       <h3>{{ book.title }}</h3>
-      <span class="badge">{{ book.status }}</span>
+      <span class="badge">{{ book.status | statusLabel }}</span>
     </div>
 
     <p class="meta">{{ book.author }} · {{ book.genre }}</p>

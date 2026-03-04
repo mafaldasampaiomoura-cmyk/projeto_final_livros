@@ -1,53 +1,67 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Book } from '../../models/book';
 
-@Injectable({ // aqui temos o CRUD essencial que preciso o trabalho. 
+@Injectable({
   providedIn: 'root'
 })
 export class BookService {
 
-  private storageKey = 'books'; // criei uma gaveta/caixote onde vou guardar os meus livros. Neste caso, a gaveta é virtual. 
+  private storageKey = 'books';
 
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
-  getAll(): Book[] {const data = localStorage.getItem(this.storageKey);
-
-  if (!data) {
-    const seed: Book[] = [
-      { id: 1, title: '1984', author: 'George Orwell', genre: 'Ficção', status: 'READ', rating: 5 },
-      { id: 2, title: 'Dune', author: 'Frank Herbert', genre: 'Sci-Fi', status: 'READING', rating: 4 },
-      { id: 3, title: 'O Alquimista', author: 'Paulo Coelho', genre: 'Romance', status: 'TO_READ', rating: 0 },
-    ];
-    localStorage.setItem(this.storageKey, JSON.stringify(seed));
-    return seed;
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
   }
+
+  getAll(): Book[] {
+    if (!this.isBrowser) return [];
+
+    const data = localStorage.getItem(this.storageKey);
+
+    if (!data) {
+      const seed: Book[] = [
+        { id: 1, title: '1984', author: 'George Orwell', genre: 'Ficção', status: 'READ', rating: 5 },
+        { id: 2, title: 'Dune', author: 'Frank Herbert', genre: 'Sci-Fi', status: 'READING', rating: 4 },
+        { id: 3, title: 'O Alquimista', author: 'Paulo Coelho', genre: 'Romance', status: 'TO_READ', rating: 0 },
+      ];
+      localStorage.setItem(this.storageKey, JSON.stringify(seed));
+      return seed;
+    }
 
     return JSON.parse(data) as Book[];
   }
 
-  getById(id: number): Book | undefined { // função para procurar os livros por ID 
+  getById(id: number): Book | undefined {
     const books = this.getAll();
     return books.find(book => book.id === id);
   }
 
-  create(book: Book): void { // crio novos livros 
-    const books = this.getAll(); // acabo por os guardar na lista dos livros 
-    book.id = new Date().getTime(); // gera id único simples baseado na data em que se adiciona o livro 
-    books.push(book);
-    localStorage.setItem(this.storageKey, JSON.stringify(books));
+  create(book: Omit<Book, 'id'>): void {
+    const books = this.getAll();
+    const newBook: Book = { id: Date.now(), ...book };
+    books.push(newBook);
+    this.saveBooks(books);
   }
 
-  update(id: number, updatedBook: Book): void {
+  update(id: number, updatedBook: Omit<Book, 'id'>): void {
     const books = this.getAll();
     const index = books.findIndex(book => book.id === id);
 
     if (index !== -1) {
       books[index] = { ...updatedBook, id };
-      localStorage.setItem(this.storageKey, JSON.stringify(books)); // converto para string os valores 
+      this.saveBooks(books);
     }
   }
+
   delete(id: number): void {
     const books = this.getAll().filter(book => book.id !== id);
-    localStorage.setItem(this.storageKey, JSON.stringify(books));// converto para string os valores 
+    this.saveBooks(books);
+  }
+
+  private saveBooks(books: Book[]): void {
+    if (!this.isBrowser) return;
+    localStorage.setItem(this.storageKey, JSON.stringify(books));
   }
 }
