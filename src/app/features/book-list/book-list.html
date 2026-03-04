@@ -1,1 +1,36 @@
-<p>book-list works!</p>
+<h2>Lista de Livros</h2>
+
+<div class="controls">
+  <input type="text" placeholder="Pesquisar por título ou autor" [(ngModel)]="searchText" />
+  <select [(ngModel)]="sortBy">
+    <option value="title">Ordenar: Título</option>
+    <option value="rating">Ordenar: Rating</option>
+  </select>
+  <select [(ngModel)]="statusFilter">
+    <option value="">Todos</option>
+    <option value="READ">Lidos</option>
+    <option value="READING">A ler</option>
+    <option value="TO_READ">Por ler</option>
+  </select>
+</div>
+
+<div class="list">
+  <div
+    class="card"
+    *ngFor="let book of filteredBooks()"
+    [ngClass]="book.status"
+  >
+    <div class="top">
+      <h3>{{ book.title }}</h3>
+      <span class="badge">{{ book.status }}</span>
+    </div>
+
+    <p class="meta">{{ book.author }} · {{ book.genre }}</p>
+
+    <p class="rating">⭐ {{ book.rating }}</p>
+
+    <div class="actions">
+      <button (click)="deleteBook(book.id)">Apagar</button>
+    </div>
+  </div>
+</div>
