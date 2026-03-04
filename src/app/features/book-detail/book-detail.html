@@ -1,1 +1,17 @@
-<p>book-detail works!</p>
+<h2>Detalhe do Livro</h2>
+
+<div *ngIf="book; else notFound">
+  <p><strong>Título:</strong> {{ book.title }}</p>
+  <p><strong>Autor:</strong> {{ book.author }}</p>
+  <p><strong>Género:</strong> {{ book.genre }}</p>
+  <p><strong>Status:</strong> {{ book.status }}</p>
+  <p><strong>Rating:</strong> {{ book.rating }}</p>
+
+  <button (click)="goBack()">Voltar</button>
+  <button (click)="deleteBook()">Apagar</button>
+</div>
+
+<ng-template #notFound>
+  <p>Livro não encontrado.</p>
+  <button (click)="goBack()">Voltar</button>
+</ng-template>

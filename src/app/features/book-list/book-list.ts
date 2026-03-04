@@ -4,11 +4,13 @@ import { BookService } from '../books/book.service';
 import { Book } from '../../models/book';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
+
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports : [CommonModule, FormsModule], 
+  imports : [CommonModule, FormsModule, StatusLabelPipe], 
   templateUrl: './book-list.html',
   styleUrls: ['./book-list.css']
 })

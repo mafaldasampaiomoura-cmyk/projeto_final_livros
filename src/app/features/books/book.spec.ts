@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { Book } from '../../models/book';
 
-import { Book } from './book';
+describe('Book model', () => {
+  it('should allow a Book object shape', () => {
+    const book: Book = {
+      id: 1,
+      title: 'Teste',
+      author: 'Autor',
+      genre: 'Género',
+      status: 'TO_READ',
+      rating: 0
+    };
 
-describe('Book', () => {
-  let service: Book;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Book);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(book.title).toBe('Teste');
   });
 });

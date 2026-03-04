@@ -1,1 +1,30 @@
-<p>book-form works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <input formControlName="title" type="text" placeholder="Título">
+  @if (form.get('title')?.invalid && form.get('title')?.touched) {
+    <p>O título do livro é obrigatório</p>
+  }
+
+  <input formControlName="author" type="text" placeholder="Autor">
+  @if (form.get('author')?.invalid && form.get('author')?.touched) {
+    <p>O autor do livro é obrigatório</p>
+  }
+
+  <input formControlName="genre" type="text" placeholder="Género">
+  @if (form.get('genre')?.invalid && form.get('genre')?.touched) {
+    <p>O género do livro é obrigatório</p>
+  }
+
+  <select formControlName="status">
+    <option value="TO_READ">Por ler</option>
+    <option value="READING">A ler</option>
+    <option value="READ">Lido</option>
+  </select>
+
+  @if (form.get('status')?.value === 'READ') {
+    <input formControlName="rating" type="number" min="0" max="5" placeholder="Rating (0-5)">
+  }
+
+  <button type="submit">Guardar</button>
+
+</form>

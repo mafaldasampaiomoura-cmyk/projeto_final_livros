@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookService } from '../books/book.service';
 import { Book } from '../../models/book';
+import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, StatusLabelPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
