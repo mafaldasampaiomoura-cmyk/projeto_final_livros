@@ -1,0 +1,50 @@
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.controls input, .controls select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 14px;
+  background: white;
+}
+
+.card .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid #ddd;
+}
+
+.card.READ { border-left: 8px solid #22c55e; }
+.card.READING { border-left: 8px solid #3b82f6; }
+.card.TO_READ { border-left: 8px solid #a1a1aa; }
+
+.meta { opacity: 0.8; margin: 6px 0; }
+.rating { font-weight: 600; }
+
+.actions button {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}

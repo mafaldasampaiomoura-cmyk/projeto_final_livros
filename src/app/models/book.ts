@@ -1,8 +1,8 @@
-export type BookStatus = 'TO_READ' | 'READING' | 'READ';
-
 export interface Book {
-  id: string;
+  id: number;
   title: string;
   author: string;
-  status: BookStatus;
+  genre: string;
+  status: 'TO_READ' | 'READING' | 'READ';
+  rating: number;
 }

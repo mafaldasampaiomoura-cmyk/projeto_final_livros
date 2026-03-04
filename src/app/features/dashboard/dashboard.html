@@ -1,1 +1,37 @@
-<h2>DASHBOARD A RENDERIZAR ✅</h2>
+<h1>Dashboard</h1>
+
+<div class="kpis">
+  <div class="kpi">
+    <p class="label">Total livros</p>
+    <p class="value">{{ totalBooks }}</p>
+  </div>
+
+  <div class="kpi">
+    <p class="label">Livros lidos</p>
+    <p class="value">{{ readBooks }}</p>
+  </div>
+
+  <div class="kpi">
+    <p class="label">Top género</p>
+    <p class="value">{{ topGenre }}</p>
+  </div>
+
+  <div class="kpi">
+    <p class="label">% lidos</p>
+    <p class="value">{{ readPercentage }}%</p>
+  </div>
+</div>
+
+<div class="box">
+  <h3>Último livro</h3>
+
+  <div *ngIf="lastBook; else empty">
+    <p><strong>{{ lastBook?.title }}</strong></p>
+    <p>{{ lastBook?.author }} · {{ lastBook.genre }}</p>
+    <p>Status: {{ lastBook?.status }} · ⭐ {{ lastBook.rating }}</p>
+  </div>
+
+  <ng-template #empty>
+    <p>Ainda não tens livros.</p>
+  </ng-template>
+</div>
