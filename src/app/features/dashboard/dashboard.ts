@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { BookService } from '../books/book.service';
 import { Book } from '../../models/book';
 import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
@@ -11,21 +12,41 @@ import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-
 export class DashboardComponent implements OnInit {
+  editar: string = "editar.png"
   books: Book[] = [];
+  LastBook: Book[] = [];
 
   totalBooks = 0;
-  readBooks = 0; 
+  readBooks = 0;
   readPercentage = 0;
   topGenre = '-';
   lastBook?: Book;
 
-  constructor(private bookService: BookService) {}
+  constructor(
+    private bookService: BookService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.getBooks();
+  }
+
+  editBook(id: number) {
+    this.router.navigate(['/books', id]);
+  }
+
+  getBooks(): void {
     this.books = this.bookService.getAll();
     this.calculateKpis();
+  }
+
+  goToBooks(): void {
+    this.router.navigate(['/livros']);
+  }
+
+  goToAdd(): void {
+    this.router.navigate(['/adicionar']);
   }
 
   private calculateKpis(): void {
@@ -33,36 +54,12 @@ export class DashboardComponent implements OnInit {
 
     this.readBooks = this.books.filter(b => b.status === 'READ').length;
 
-    this.readPercentage = this.totalBooks === 0
-      ? 0
-      : Math.round((this.readBooks / this.totalBooks) * 100);
+    this.readPercentage =
+    this.totalBooks === 0 ? 0 : Math.round((this.readBooks / this.totalBooks) * 100);
 
-    this.topGenre = this.getTopGenre(this.books);
-
-    this.lastBook = this.totalBooks > 0 ? this.books[this.totalBooks - 1] : undefined;
+    this.LastBook = this.books.slice(-10).reverse();
+  
+   
   }
 
-  private getTopGenre(books: Book[]): string {
-    if (books.length === 0) return '-';
-
-    const counter: Record<string, number> = {};
-
-    for (const b of books) {
-      const g = (b.genre || '').trim();
-      if (!g) continue;
-      counter[g] = (counter[g] || 0) + 1;
-    }
-
-    let top = '-';
-    let max = 0;
-
-    for (const genre in counter) {
-      if (counter[genre] > max) {
-        max = counter[genre];
-        top = genre;
-      }
-    }
-
-    return top;
-  }
 }

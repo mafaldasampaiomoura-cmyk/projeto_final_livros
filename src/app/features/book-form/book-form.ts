@@ -24,7 +24,7 @@ export class BookForm {
     author: new FormControl('', [Validators.required]),
     genre: new FormControl('', [Validators.required]),
     status: new FormControl<'TO_READ' | 'READING' | 'READ'>('TO_READ', [Validators.required]),
-    rating: new FormControl<number>(0), // não é obrigatório sempre
+    rating: new FormControl<number>(0),
   });
 
   onSubmit() {

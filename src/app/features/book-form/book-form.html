@@ -1,30 +1,24 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<div class="page">
+  <div class="form-card">
+    <div class="form-header">
+      <h2>Adicionar livro</h2>
+      <p>Preenche os dados do livro e guarda.</p>
+    </div>
 
-  <input formControlName="title" type="text" placeholder="Título">
-  @if (form.get('title')?.invalid && form.get('title')?.touched) {
-    <p>O título do livro é obrigatório</p>
-  }
+    <form class="form-grid" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-  <input formControlName="author" type="text" placeholder="Autor">
-  @if (form.get('author')?.invalid && form.get('author')?.touched) {
-    <p>O autor do livro é obrigatório</p>
-  }
+      
+      <input class="input" placeholder="Título" formControlName="title" />
+      <input class="input" placeholder="Autor" formControlName="author" />
+      <input class="input" placeholder="Género" formControlName="genre" />
 
-  <input formControlName="genre" type="text" placeholder="Género">
-  @if (form.get('genre')?.invalid && form.get('genre')?.touched) {
-    <p>O género do livro é obrigatório</p>
-  }
+      <select class="input" formControlName="status">
+        <option value="TO_READ">Por ler</option>
+        <option value="READING">A ler</option>
+        <option value="READ">Lido</option>
+      </select>
 
-  <select formControlName="status">
-    <option value="TO_READ">Por ler</option>
-    <option value="READING">A ler</option>
-    <option value="READ">Lido</option>
-  </select>
-
-  @if (form.get('status')?.value === 'READ') {
-    <input formControlName="rating" type="number" min="0" max="5" placeholder="Rating (0-5)">
-  }
-
-  <button type="submit">Guardar</button>
-
-</form>
+      <button class="btn-primary" type="submit">Guardar</button>
+    </form>
+  </div>
+</div> 

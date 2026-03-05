@@ -2,17 +2,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'statusLabel',
-  standalone: true
+  standalone: true,
 })
 export class StatusLabelPipe implements PipeTransform {
-
-  transform(status: string): string {
-
-    if (status === 'READ') return 'Lido';
-    if (status === 'READING') return 'A ler';
-    if (status === 'TO_READ') return 'Por ler';
-
-    return status;
+  transform(value: string | null | undefined): string {
+    if (!value) return '';
+    if (value === 'TO_READ') return 'Por ler';
+    if (value === 'READING') return 'A ler';
+    if (value === 'READ') return 'Lido';
+    return value;
   }
-
 }

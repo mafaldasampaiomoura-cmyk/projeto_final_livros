@@ -1,18 +1,19 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { BookService } from '../books/book.service';
 import { Book } from '../../models/book';
 
 @Component({
   selector: 'app-book-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './book-detail.html',
-  styleUrl: './book-detail.css',
 })
-
 export class BookDetailComponent implements OnInit {
+
+  id!: number;
   book?: Book;
 
   constructor(
@@ -22,25 +23,29 @@ export class BookDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    const id = Number(idParam);
 
-    if (!idParam || Number.isNaN(id)) {
-      this.book = undefined;
-      return;
-    }
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.book = this.bookService.getById(id);
+    this.book = this.bookService.getById(this.id);
+
   }
 
-  deleteBook(): void {
+  saveBook() {
+
     if (!this.book) return;
 
-    this.bookService.delete(this.book.id);
-    this.router.navigate(['/livros']);
+    const { title, author, genre, status, rating } = this.book;
+
+    this.bookService.update(this.id, {
+      title,
+      author,
+      genre,
+      status,
+      rating
+    });
+
+    this.router.navigate(['/books']);
+
   }
 
-  goBack(): void {
-    this.router.navigate(['/livros']);
-  }
 }

@@ -1,37 +1,40 @@
-<h1>Dashboard</h1>
-
 <div class="kpis">
-  <div class="kpi">
-    <p class="label">Total livros</p>
-    <p class="value">{{ totalBooks }}</p>
+  <div class="kpi-card">
+    <p>Total livros</p>
+    <h2>{{ totalBooks }}</h2>
   </div>
-
-  <div class="kpi">
-    <p class="label">Livros lidos</p>
-    <p class="value">{{ readBooks }}</p>
+ 
+  <div class="kpi-card">
+    <p>Livros lidos</p>
+    <h2>{{ readBooks }}</h2>
   </div>
-
-  <div class="kpi">
-    <p class="label">Top género</p>
-    <p class="value">{{ topGenre }}</p>
+  
+  <div class="kpi-card">
+  <p>% lidos</p>
+  <h2>{{ readPercentage }} %</h2>
   </div>
-
-  <div class="kpi">
-    <p class="label">% lidos</p>
-    <p class="value">{{ readPercentage }}%</p>
-  </div>
+  
 </div>
 
-<div class="box">
-  <h3>Último livro</h3>
+ <h3> Os meus Livros </h3>
 
-  <div *ngIf="lastBook; else empty">
-    <p><strong>{{ lastBook?.title }}</strong></p>
-    <p>{{ lastBook?.author }} · {{ lastBook.genre }}</p>
-    <p>Status: {{ lastBook.status | statusLabel }} · ⭐ {{ lastBook.rating }}</p>
+@for (book of LastBook; track book.id) {
+  <div class="book-card">
+    <div class="book-top">
+      <div>
+        <h3 class="book-title">{{ book.title }}</h3>
+        <p class="book-meta">{{ book.author }} · {{ book.genre }}</p>
+      </div>
+
+      <button type="button" class="edit-btn" (click)="editBook(book.id)">
+        <img [src]="editar" class="edit-icon" alt="" />
+        <span>Editar</span>
+      </button>
+    </div>
+
+    <div class="book-bottom">
+      <span class="pill">{{ book.status | statusLabel }}</span>
+      <span class="pill">⭐ {{ book.rating }}</span>
+    </div>
   </div>
-
-  <ng-template #empty>
-    <p>Ainda não tens livros.</p>
-  </ng-template>
-</div>
+}

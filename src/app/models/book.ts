@@ -4,5 +4,6 @@ export interface Book {
   author: string;
   genre: string;
   status: 'TO_READ' | 'READING' | 'READ';
-  rating: number;
+  rating?: number;
+  startDate?: string;
 }
