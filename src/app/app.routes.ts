@@ -6,12 +6,10 @@ import { BookDetailComponent } from './features/book-detail/book-detail';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
+  { path: 'books/:id', loadComponent: () => import('./features/book-detail/book-detail') .then(m => m.BookDetailComponent)},
   { path: 'dashboard', component: DashboardComponent },
-
   { path: 'livros', component: BookListComponent },
   { path: 'adicionar', component: BookForm },
-
-  { path: '**', redirectTo: '' },
-
   { path: 'livros/:id', component: BookDetailComponent },
+  { path: '**', redirectTo: '' },
 ];

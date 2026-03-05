@@ -1,36 +1,41 @@
 <h2>Lista de Livros</h2>
 
 <div class="controls">
-  <input type="text" placeholder="Pesquisar por título ou autor" [(ngModel)]="searchText" />
-  <select [(ngModel)]="sortBy">
-    <option value="title">Ordenar: Título</option>
-    <option value="rating">Ordenar: Rating</option>
-  </select>
-  <select [(ngModel)]="statusFilter">
-    <option value="">Todos</option>
-    <option value="READ">Lidos</option>
-    <option value="READING">A ler</option>
-    <option value="TO_READ">Por ler</option>
-  </select>
+  <div class="chips" role="tablist" aria-label="Filtro por estado">
+    <button type="button" class="chip" [class.active]="statusFilter === ''" (click)="statusFilter = ''">
+      Todos
+    </button>
+
+    <button type="button" class="chip" [class.active]="statusFilter === 'TO_READ'" (click)="statusFilter = 'TO_READ'">
+      Por ler
+    </button>
+
+    <button type="button" class="chip" [class.active]="statusFilter === 'READING'" (click)="statusFilter = 'READING'">
+      A ler
+    </button>
+
+    <button type="button" class="chip" [class.active]="statusFilter === 'READ'" (click)="statusFilter = 'READ'">
+      Lido
+    </button>
+  </div>
 </div>
 
 <div class="list">
-  <div
-    class="card"
-    *ngFor="let book of filteredBooks()"
-    [ngClass]="book.status"
-  >
+  <div class="card" *ngFor="let book of filteredBooks()" [ngClass]="book.status">
     <div class="top">
       <h3>{{ book.title }}</h3>
       <span class="badge">{{ book.status | statusLabel }}</span>
     </div>
 
     <p class="meta">{{ book.author }} · {{ book.genre }}</p>
-
     <p class="rating">⭐ {{ book.rating }}</p>
 
     <div class="actions">
-      <button (click)="deleteBook(book.id)">Apagar</button>
+      <button type="button" class="edit-btn" (click)="editBook(book.id)" title="Editar">
+        <img [src]="editar" class="edit-icon" alt="Editar" />
+      </button>
+
+      <button type="button" (click)="deleteBook(book.id)">Apagar</button>
     </div>
   </div>
 </div>

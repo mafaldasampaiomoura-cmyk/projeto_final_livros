@@ -1,17 +1,23 @@
-<h2>Detalhe do Livro</h2>
+<h2>Editar Livro</h2>
 
-<div *ngIf="book; else notFound">
-  <p><strong>Título:</strong> {{ book.title }}</p>
-  <p><strong>Autor:</strong> {{ book.author }}</p>
-  <p><strong>Género:</strong> {{ book.genre }}</p>
-  <p><strong>Status:</strong> {{ book.status }}</p>
-  <p><strong>Rating:</strong> {{ book.rating }}</p>
+<div *ngIf="book">
 
-  <button (click)="goBack()">Voltar</button>
-  <button (click)="deleteBook()">Apagar</button>
+<input [(ngModel)]="book.title" placeholder="Título">
+
+<input [(ngModel)]="book.author" placeholder="Autor">
+
+<input [(ngModel)]="book.genre" placeholder="Género">
+
+<select [(ngModel)]="book.status">
+
+<option value="TO_READ">Por ler</option>
+<option value="READING">A ler</option>
+<option value="READ">Lido</option>
+
+</select>
+
+<input type="number" [(ngModel)]="book.rating" min="0" max="5" [disabled]="book.status !== 'READ'">
+
+<button (click)="saveBook()">Guardar</button>
+
 </div>
-
-<ng-template #notFound>
-  <p>Livro não encontrado.</p>
-  <button (click)="goBack()">Voltar</button>
-</ng-template>

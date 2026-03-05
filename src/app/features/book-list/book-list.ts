@@ -1,71 +1,50 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
 import { BookService } from '../books/book.service';
 import { Book } from '../../models/book';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
-
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports : [CommonModule, FormsModule, StatusLabelPipe], 
+  imports: [CommonModule, FormsModule, StatusLabelPipe],
   templateUrl: './book-list.html',
-  styleUrls: ['./book-list.css']
+  styleUrl: './book-list.css',
 })
 export class BookListComponent implements OnInit {
+  editar: string = 'editar.png';
+  statusFilter: '' | 'READ' | 'READING' | 'TO_READ' = '';
+
   books: Book[] = [];
 
-  constructor(private bookService: BookService, private router: Router) {}
+  constructor(
+    private router: Router,
+    private bookService: BookService
+  ) {}
 
   ngOnInit(): void {
-    this.loadBooks();
-  }
-
-  loadBooks(): void {
     this.books = this.bookService.getAll();
   }
 
-  goToDetail(id: number): void {
-    this.router.navigate(['/detalhe', id]);
+  editBook(id: number) {
+    this.router.navigate(['/books', id]);
   }
 
-  deleteBook(id: number): void {
+  deleteBook(id: number) {
     this.bookService.delete(id);
-    this.loadBooks();
+    this.books = this.bookService.getAll();
+
   }
 
-  searchText: string = '';
-sortBy: 'title' | 'rating' = 'title';
-statusFilter: '' | 'READ' | 'READING' | 'TO_READ' = '';
+  filteredBooks(): Book[] {
+    let filtered = [...this.books];
 
-filteredBooks() {
-  let result = [...this.books];
-
-  // filtro por status
-  if (this.statusFilter) {
-    result = result.filter(b => b.status === this.statusFilter);
+    if (this.statusFilter) {
+      filtered = filtered.filter(book => book.status === this.statusFilter);
+    }
+  return filtered;
   }
 
-  // pesquisa por título/autor
-  const q = this.searchText.trim().toLowerCase();
-  if (q) {
-    result = result.filter(b =>
-      b.title.toLowerCase().includes(q) ||
-      b.author.toLowerCase().includes(q)
-    );
-  }
-
-  // ordenação
-  result.sort((a, b) => {
-    if (this.sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
-    return a.title.localeCompare(b.title);
-  });
-
-  return result;
-  }
-
-  
 }
-
