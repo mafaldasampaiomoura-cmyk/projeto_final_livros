@@ -110,7 +110,7 @@
   font-weight:700;
 }
 
-/* Texto do card */
+
 .book-card p{
   margin:8px 0 0;
   color:#444;
@@ -119,7 +119,6 @@
 .book-card p:first-of-type{
   color:#666;
 }
-
 
 .edit-btn{
   display:inline-flex;
@@ -144,7 +143,6 @@
   display:block;
 }
 
-/* --- Botões no fundo --- */
 .buttons{
   display:flex;
   gap:10px;
@@ -156,11 +154,19 @@
   padding:10px 14px;
   border:1px solid #ddd;
   border-radius:12px;
-  background:#fff;
+  background:#ad91cf;
   cursor:pointer;
   font-weight:600;
 }
 
 .buttons button:hover{
   background:#f6f6f6;
+}
+
+.pill.READ{ background-color:#2ecc71; }
+.pill.READING{ background-color:#f39c12; }
+.pill.TO_READ{ background-color:#3498db; }
+
+.book-title:hover{
+  text-decoration:underline;
 }
