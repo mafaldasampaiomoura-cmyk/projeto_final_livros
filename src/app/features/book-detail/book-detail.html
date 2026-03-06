@@ -1,23 +1,51 @@
-<h2>Editar Livro</h2>
+<div class="page">
+  @if (book) {
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Detalhe do Livro</h2>
+        <p>Consulta toda a informação do livro ou edita os seus dados.</p>
+      </div>
 
-<div *ngIf="book">
+      @if (!isEditing) {
+        <div class="detail-view">
+          <p><strong>Título:</strong> {{ book.title }}</p>
+          <p><strong>Autor:</strong> {{ book.author }}</p>
+          <p><strong>Género:</strong> {{ book.genre }}</p>
+          <p><strong>Estado:</strong> {{ book.status | statusLabel }}</p>
+          <p><strong>Rating:</strong> ⭐ {{ book.rating }}</p>
 
-<input [(ngModel)]="book.title" placeholder="Título">
+          <button class="btn-primary" type="button" (click)="enableEdit()">Editar</button>
+        </div>
+      }
 
-<input [(ngModel)]="book.author" placeholder="Autor">
+      @if (isEditing) {
+        <form [formGroup]="form" class="form-grid" (ngSubmit)="saveBook()">
+          <input class="input" type="text" formControlName="title" placeholder="Título" />
+          <input class="input" type="text" formControlName="author" placeholder="Autor" />
+          <input class="input" type="text" formControlName="genre" placeholder="Género" />
 
-<input [(ngModel)]="book.genre" placeholder="Género">
+          <select class="input" formControlName="status">
+            <option value="TO_READ">Por ler</option>
+            <option value="READING">A ler</option>
+            <option value="READ">Lido</option>
+          </select>
 
-<select [(ngModel)]="book.status">
+          @if (form.get('status')?.value === 'READ') {
+            <input class="input" type="number" formControlName="rating" min="1" max="5" placeholder="Rating (1 a 5)"/>
+          }
 
-<option value="TO_READ">Por ler</option>
-<option value="READING">A ler</option>
-<option value="READ">Lido</option>
+          @if (form.touched && form.invalid) {
+            <div class="error-box">
+              Preenche todos os campos antes de guardar.
+            </div>
+          }
 
-</select>
-
-<input type="number" [(ngModel)]="book.rating" min="0" max="5" [disabled]="book.status !== 'READ'">
-
-<button (click)="saveBook()">Guardar</button>
-
+          <div class="form-actions">
+            <button class="btn-primary" type="submit">Guardar</button>
+            <button class="btn-secondary" type="button" (click)="cancelEdit()">Cancelar</button>
+          </div>
+        </form>
+      }
+    </div>
+  }
 </div>

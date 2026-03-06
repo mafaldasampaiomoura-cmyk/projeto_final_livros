@@ -14,6 +14,8 @@ import { Book } from '../../models/book';
 })
 export class BookForm {
 
+  showFormError = false; 
+
   constructor(
     private bookService: BookService,
     private router: Router
@@ -30,9 +32,11 @@ export class BookForm {
   onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      alert('Por favor, preencha o formulário corretamente');
+     this.showFormError = true;
       return;
     }
+
+    this.showFormError = false; 
 
     const title = this.form.get('title')?.value ?? '';
     const author = this.form.get('author')?.value ?? '';

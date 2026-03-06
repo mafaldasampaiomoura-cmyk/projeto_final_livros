@@ -16,6 +16,7 @@ import { Book } from '../../models/book';
 export class BookListComponent implements OnInit {
   editar: string = 'editar.png';
   statusFilter: '' | 'READ' | 'READING' | 'TO_READ' = '';
+  sortBy: 'title-asc' | 'title-desc' | 'rating-desc' | 'rating-asc' = 'title-asc';
 
   books: Book[] = [];
 
@@ -38,13 +39,36 @@ export class BookListComponent implements OnInit {
 
   }
 
-  filteredBooks(): Book[] {
-    let filtered = [...this.books];
+ filteredBooks(): Book[] {
+  let filtered = [...this.books];
 
-    if (this.statusFilter) {
-      filtered = filtered.filter(book => book.status === this.statusFilter);
-    }
+  if (this.statusFilter) {
+    filtered = filtered.filter(book => book.status === this.statusFilter);
+  }
+
+  switch (this.sortBy) {
+    case 'title-asc':
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+
+    case 'title-desc':
+      filtered.sort((a, b) => b.title.localeCompare(a.title));
+      break;
+
+    case 'rating-desc':
+      filtered.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+      break;
+
+    case 'rating-asc':
+      filtered.sort((a, b) => (a.rating ?? 0) - (b.rating ?? 0));
+      break;
+  }
+
   return filtered;
+  }
+
+  openBook(id: number){ 
+    this.router.navigate(['/books', id])
   }
 
 }

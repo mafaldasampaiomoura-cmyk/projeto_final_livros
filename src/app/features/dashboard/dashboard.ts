@@ -49,6 +49,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/adicionar']);
   }
 
+  openBook(id: number){
+    this.router.navigate(['/books', id]);
+  }
+
   private calculateKpis(): void {
     this.totalBooks = this.books.length;
 
@@ -57,7 +61,7 @@ export class DashboardComponent implements OnInit {
     this.readPercentage =
     this.totalBooks === 0 ? 0 : Math.round((this.readBooks / this.totalBooks) * 100);
 
-    this.LastBook = this.books.slice(-10).reverse();
+    this.LastBook = this.books.slice(-5).reverse();
   
    
   }

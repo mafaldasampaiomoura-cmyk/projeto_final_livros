@@ -7,10 +7,20 @@
 
     <form class="form-grid" (ngSubmit)="onSubmit()" [formGroup]="form">
 
-      
       <input class="input" placeholder="Título" formControlName="title" />
+      @if (form.get('title')?.invalid && form.get('title')?.touched) {
+        <p class="error-message">O título é obrigatório.</p>
+      }
+
       <input class="input" placeholder="Autor" formControlName="author" />
+      @if (form.get('author')?.invalid && form.get('author')?.touched) {
+        <p class="error-message">O autor é obrigatório.</p>
+      }
+
       <input class="input" placeholder="Género" formControlName="genre" />
+      @if (form.get('genre')?.invalid && form.get('genre')?.touched) {
+        <p class="error-message">O género é obrigatório.</p>
+      }
 
       <select class="input" formControlName="status">
         <option value="TO_READ">Por ler</option>
@@ -18,7 +28,17 @@
         <option value="READ">Lido</option>
       </select>
 
+      @if (form.get('status')?.value === 'READ') {
+        <input class="input" formControlName="rating" type="number" min="0" max="5" placeholder="Rating (0-5)" />
+      }
+
+      @if (showFormError) {
+        <p class="error-message form-error">
+          Por favor, preenche os campos obrigatórios.
+        </p>
+      }
+
       <button class="btn-primary" type="submit">Guardar</button>
     </form>
   </div>
-</div> 
+</div>
