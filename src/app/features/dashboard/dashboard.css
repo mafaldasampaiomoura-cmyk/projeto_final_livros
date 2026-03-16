@@ -170,3 +170,21 @@
 .book-title:hover{
   text-decoration:underline;
 }
+
+.book-title-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.book-title-btn:hover {
+  text-decoration: underline;
+}

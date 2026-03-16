@@ -20,7 +20,7 @@
   @for (book of filteredBooks(); track book.id) {
     <div class="card" [ngClass]="book.status">
       <div class="top">
-        <h3 class="book-title" (click)="openBook(book.id)">{{ book.title }}</h3>
+        <h3 class="book-title" tabindex="0" (click)="openBook(book.id)" (keydown)="openBook(book.id)">{{ book.title }}</h3>
         <span class="badge">{{ book.status | statusLabel }}</span>
       </div>
 

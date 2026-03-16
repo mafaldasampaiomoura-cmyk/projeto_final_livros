@@ -21,7 +21,9 @@
   <div class="book-card">
     <div class="book-top">
       <div>
-        <h3 class="book-title"(click)="openBook(book.id)">{{ book.title }}</h3>
+        <button type="button" class="book-title-btn" (click)="openBook(book.id)">
+        {{ book.title }}
+        </button>
         <p class="book-meta">{{ book.author }} · {{ book.genre }}</p>
       </div>
 

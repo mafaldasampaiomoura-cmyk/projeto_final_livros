@@ -1,0 +1,26 @@
+{
+  "books": [
+    {
+      "id": 1773411227760,
+      "title": "Fourth Wing",
+      "author": "Rebecca Yarros",
+      "genre": "Fantasia",
+      "status": "READ",
+      "rating": 5
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@email.com",
+      "password": "1234",
+      "name": "Mafalda"
+    },
+    {
+      "id": 2,
+      "email": "teste@email.com",
+      "password": "abcd",
+      "name": "Lúcio"
+    }
+  ]
+}

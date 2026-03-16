@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookService } from '../books/book.service';
@@ -13,13 +13,10 @@ import { Book } from '../../models/book';
   styleUrl: './book-form.css',
 })
 export class BookForm {
+  private bookService = inject(BookService);
+  private router = inject(Router);
 
-  showFormError = false; 
-
-  constructor(
-    private bookService: BookService,
-    private router: Router
-  ) {}
+  showFormError = false;
 
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -32,11 +29,11 @@ export class BookForm {
   onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-     this.showFormError = true;
+      this.showFormError = true;
       return;
     }
 
-    this.showFormError = false; 
+    this.showFormError = false;
 
     const title = this.form.get('title')?.value ?? '';
     const author = this.form.get('author')?.value ?? '';
@@ -51,9 +48,7 @@ export class BookForm {
     const newBook: Omit<Book, 'id'> = { title, author, genre, status, rating };
 
     this.bookService.create(newBook);
-
     this.form.reset({ title: '', author: '', genre: '', status: 'TO_READ', rating: 0 });
-
     this.router.navigate(['/livros']);
   }
 }
