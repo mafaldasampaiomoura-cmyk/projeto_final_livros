@@ -1,5 +1,15 @@
-<div class="container">
+<!-- <div class="container">
   <app-header class="sidebar"></app-header>
+
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+</div> -->
+
+<div class="container">
+  @if (!isLoginPage()) {
+    <app-header class="sidebar"></app-header>
+  }
 
   <main class="main">
     <router-outlet></router-outlet>

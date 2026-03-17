@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BookService } from '../books/book.service';
@@ -13,7 +13,7 @@ import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
   styleUrl: './dashboard.css',
 })
 export class DashboardComponent implements OnInit {
-  editar: string = "editar.png"
+  editar = "editar.png";
   books: Book[] = [];
   LastBook: Book[] = [];
 
@@ -23,10 +23,13 @@ export class DashboardComponent implements OnInit {
   topGenre = '-';
   lastBook?: Book;
 
-  constructor(
-    private bookService: BookService,
-    private router: Router
-  ) {}
+private bookService = inject(BookService);
+private router = inject(Router) 
+
+constructor() {
+  this.bookService = inject (BookService);
+  this.router = inject (Router);
+}
 
   ngOnInit(): void {
     this.getBooks();

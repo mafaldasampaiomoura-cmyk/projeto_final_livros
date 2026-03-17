@@ -31,3 +31,20 @@
   background: #111827;
   color: white;
 }
+
+.logout-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.logout-btn:hover {
+  background: #f6f6f6;
+} 

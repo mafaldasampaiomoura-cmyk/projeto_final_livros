@@ -1,0 +1,52 @@
+<div class="login-page">
+  <div class="login-card">
+    <h2>Login</h2>
+
+    <form (ngSubmit)="login()">
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Introduz o teu email"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="password">Palavra-passe</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Introduz a tua palavra-passe"
+          required
+        />
+      </div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'A validar...' : 'Entrar' }}
+      </button>
+
+      <button
+        type="button"
+        class="secondary"
+        (click)="register()"
+        [disabled]="loading"
+      >
+        Criar conta
+      </button>
+    </form>
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (successMessage) {
+      <p class="success">{{ successMessage }}</p>
+    }
+  </div>
+</div>

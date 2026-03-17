@@ -1,0 +1,59 @@
+services: #defino os serviços/containers que quero correr. Neste caso são 2: APP & API
+
+  # Serviço responsável pelo frontend Angular
+  app: #nome do serviço da aplicação frontend--> container da aplicação angular 
+
+    # Construir imagem a partir do Dockerfile do projeto
+    build: #em vez de usar uma pronta, usa uma imame nova. Ele usa o meu projeto e o meu dockerfile para criar a imagem 
+      context: . #usa a pasta atual como contente de construção. 
+      dockerfile: Dockerfile #usa o ficheiro dockerfile 
+
+    # Nome do container (opcional, mas útil para identificar)
+    container_name: angular-app #escolho o nome do meu container. o meu container aqui chama-se angular-app
+
+    # Mapeamento de portas
+    ports: #mapeia as portas entre o meu computador e o container 
+      - "${APP_PORT}:80" # a porta do meu computador vai ligar à porta 80 do container 
+
+    # Garantir que a API arranca antes da aplicação
+    depends_on: #depende deste serviço 
+      - api #antes de arrancar a app pode precisar da api já disponível
+
+    # Variáveis de ambiente para a aplicação
+    environment: #defino as variáveis de ambiente para dentro do container 
+      API_URL: ${API_URL} #isto vem do meu env. Serve para dizer onde ele está.
+
+  # Serviço responsável pela API mock
+  api:
+
+    # Imagem base que contém Node.js
+    image: node:18-alpine
+
+    # Nome do container
+    container_name: mock-api
+
+    # Diretório de trabalho dentro do container
+    working_dir: /app
+
+    # Estas variáveis vêm do ficheiro .env
+    environment:
+      JSON_SERVER_WATCH: ${JSON_SERVER_WATCH}
+
+    # Comando executado quando o container inicia
+    command: >
+      sh -c "npm install -g json-server &&
+      json-server --host 0.0.0.0 --port 3000 /app/db.json"
+
+    # Mapeamento de portas da API
+    ports:
+      - "${API_PORT}:3000"
+
+    # Volume para montar o ficheiro db.json dentro do container
+    volumes:
+      - ./mock-api/db.json:/app/db.json
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://api:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

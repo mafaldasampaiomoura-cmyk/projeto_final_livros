@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StatusLabelPipe } from '../../shared/shared/pipes/status-label.pipe';
@@ -14,16 +14,14 @@ import { Book } from '../../models/book';
   styleUrl: './book-list.css',
 })
 export class BookListComponent implements OnInit {
-  editar: string = 'editar.png';
+  private router = inject(Router);
+  private bookService = inject(BookService);
+
+  editar = 'editar.png';
   statusFilter: '' | 'READ' | 'READING' | 'TO_READ' = '';
   sortBy: 'title-asc' | 'title-desc' | 'rating-desc' | 'rating-asc' = 'title-asc';
 
   books: Book[] = [];
-
-  constructor(
-    private router: Router,
-    private bookService: BookService
-  ) {}
 
   ngOnInit(): void {
     this.books = this.bookService.getAll();
@@ -36,39 +34,34 @@ export class BookListComponent implements OnInit {
   deleteBook(id: number) {
     this.bookService.delete(id);
     this.books = this.bookService.getAll();
-
   }
 
- filteredBooks(): Book[] {
-  let filtered = [...this.books];
+  filteredBooks(): Book[] {
+    let filtered = [...this.books];
 
-  if (this.statusFilter) {
-    filtered = filtered.filter(book => book.status === this.statusFilter);
+    if (this.statusFilter) {
+      filtered = filtered.filter(book => book.status === this.statusFilter);
+    }
+
+    switch (this.sortBy) {
+      case 'title-asc':
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'title-desc':
+        filtered.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case 'rating-desc':
+        filtered.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+        break;
+      case 'rating-asc':
+        filtered.sort((a, b) => (a.rating ?? 0) - (b.rating ?? 0));
+        break;
+    }
+
+    return filtered;
   }
 
-  switch (this.sortBy) {
-    case 'title-asc':
-      filtered.sort((a, b) => a.title.localeCompare(b.title));
-      break;
-
-    case 'title-desc':
-      filtered.sort((a, b) => b.title.localeCompare(a.title));
-      break;
-
-    case 'rating-desc':
-      filtered.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
-      break;
-
-    case 'rating-asc':
-      filtered.sort((a, b) => (a.rating ?? 0) - (b.rating ?? 0));
-      break;
+  openBook(id: number) {
+    this.router.navigate(['/books', id]);
   }
-
-  return filtered;
-  }
-
-  openBook(id: number){ 
-    this.router.navigate(['/books', id])
-  }
-
 }

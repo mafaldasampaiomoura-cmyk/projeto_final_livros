@@ -1,0 +1,18 @@
+#IMAGEM BASE
+FROM node:20-alpine
+
+#DIRETORIA DE TRABALHO (ONDE CORREM OS SCRIPTS --> RUN)
+WORKDIR /usr/src/app
+
+#COPIAR FICHEIROS PARA A IMAGEM 
+COPY . .
+
+# CORRE NPM INSTALL -> INSTALA PACKAGES (ENQUANTO FAZ O BUILD)
+RUN npm install
+
+#COMANDOS A CORRER NO FIM DO BUILD 
+#estou a dizer que quero inicializar na Bash 
+CMD ["sh"]
+
+# //docker run -it --name idp idp:v1
+EXPOSE 4200

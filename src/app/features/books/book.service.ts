@@ -1,4 +1,4 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Book } from '../../models/book';
 
@@ -6,14 +6,9 @@ import { Book } from '../../models/book';
   providedIn: 'root'
 })
 export class BookService {
-
   private storageKey = 'books';
-
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
-
-  private get isBrowser(): boolean {
-    return isPlatformBrowser(this.platformId);
-  }
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   getAll(): Book[] {
     if (!this.isBrowser) return [];
