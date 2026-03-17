@@ -10,30 +10,43 @@
           type="email"
           name="email"
           [(ngModel)]="email"
+          placeholder="Introduz o teu email"
           required
         />
       </div>
 
       <div class="field">
-        <label for="password">Password</label>
+        <label for="password">Palavra-passe</label>
         <input
           id="password"
           type="password"
           name="password"
           [(ngModel)]="password"
+          placeholder="Introduz a tua palavra-passe"
           required
         />
       </div>
 
-      <button type="submit">Entrar</button>
-    </form>
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'A validar...' : 'Entrar' }}
+      </button>
 
-    @if (successMessage) {
-      <p class="success">{{ successMessage }}</p>
-    }
+      <button
+        type="button"
+        class="secondary"
+        (click)="register()"
+        [disabled]="loading"
+      >
+        Criar conta
+      </button>
+    </form>
 
     @if (errorMessage) {
       <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (successMessage) {
+      <p class="success">{{ successMessage }}</p>
     }
   </div>
 </div>

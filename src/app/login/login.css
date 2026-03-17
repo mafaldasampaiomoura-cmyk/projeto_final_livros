@@ -1,9 +1,17 @@
-.login-page {
+:host {
+  display: block;
+  width: 100vw;
   min-height: 100vh;
+}
+
+.login-page {
+  position: fixed;
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #f4f4f4;
+  z-index: 1;
 }
 
 .login-card {
@@ -44,10 +52,15 @@ button {
   background: black;
   color: white;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 button:hover {
   opacity: 0.9;
+}
+
+button.secondary {
+  background: #222;
 }
 
 .error {
