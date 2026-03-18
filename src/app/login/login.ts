@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class LoginComponent {git add .
+export class LoginComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
