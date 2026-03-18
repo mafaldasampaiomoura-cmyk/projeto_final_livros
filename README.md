@@ -1,3 +1,5 @@
+[![CI](https://github.com/mafaldasampaiomoura-cmyk/projeto_final_livros/actions/workflows/ci.yml/badge.svg)](https://github.com/mafaldasampaiomoura-cmyk/projeto_final_livros/actions/workflows/ci.yml)
+
 # ProjetoLivros
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
