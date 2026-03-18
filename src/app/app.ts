@@ -50,4 +50,4 @@ export class App {
   }
 }
 
-let Abc = 123; git add .
+let abc = 123;
