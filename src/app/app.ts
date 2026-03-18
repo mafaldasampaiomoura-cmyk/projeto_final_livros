@@ -49,3 +49,5 @@ export class App {
     return this.router.url === '/' || this.router.url === '/login';
   }
 }
+
+let Abc = '123'
