@@ -50,4 +50,3 @@ export class App {
   }
 }
 
-let Abc = '123'
