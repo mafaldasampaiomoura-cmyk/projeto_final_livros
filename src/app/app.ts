@@ -49,5 +49,3 @@ export class App {
     return this.router.url === '/' || this.router.url === '/login';
   }
 }
-
-let erro = "erro";
