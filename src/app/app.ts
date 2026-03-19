@@ -50,3 +50,4 @@ export class App {
   }
 }
 
+let erro = "erro"; 
